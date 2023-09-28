@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login Page</title>
+    <style>
+        /* 스타일링 */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 150px;
+            background-color: black;
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/back_pic/00/08/59/12562ae7ecb15a5.jpg');
+            background-size: cover;
+        }
+
+        .login-container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding-bottom: 40px;
+            opacity: 0.6;   
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 90%;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid black;
+            outline: none;
+        }
+
+        .btn-primary {
+            width: 200px;
+            background-color: gray;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+
+        .btn-primary:hover {
+            background-color: black;
+        }
+
+        .bottom-menu {
+            display: flex;
+            justify-content: center;   
+        }
+        
+        .sign-in {
+            padding-right: 20px;
+        }
+
+        .myname {
+            border: 5px solid;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>로그인</h1>
+        <form>
+            <div class="form-group">
+              
+                <input type="text" id="username" name="username" placeholder="아이디">
+            </div>
+            <div class="form-group">
+
+                <input type="password" id="password" name="password" placeholder="비밀번호">
+            </div>
+            <button type="submit" class="btn-primary">Login</button>
+
+            <div class="bottom-menu">
+                <div class="sign-in">회원가입</div>
+
+                <div>아이디/비밀번호 찾기</div>
+            </div>
+
+            <div class="myname">asdfasdf</div>
+        </form>
+    </div>
+</body>
+</html>
