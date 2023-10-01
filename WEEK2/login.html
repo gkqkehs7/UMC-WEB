@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login Page</title>
+    <style>
+        /* 스타일링 */
+        body {
+            font-family: Arial, sans-serif;
+            padding-top: 150px;
+            background-color: black;
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/back_pic/00/08/59/12562ae7ecb15a5.jpg');
+            background-size: cover;
+        }
+
+        .title-container {
+            text-align: center;
+        }
+
+        .login-container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 40px 100px;
+            opacity: 0.6;   
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 90%;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid black;
+            outline: none;
+        }
+
+        .input-error {
+            color:red;
+            font-size: small;
+        }
+
+        .input-correct {
+            color:green;
+            font-size: small;
+        }
+
+
+        .btn-primary {
+            width: 200px;
+            background-color: gray;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            pointer-events: none;
+        }
+
+        .btn-primary:hover {
+            background-color: black;
+        }
+
+        .bottom-container {
+            display: flex;
+            justify-content: center;   
+            align-items: center;
+        }
+
+        .modal {
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 1);
+            z-index: 1;
+        }
+
+        .modal-content {
+            width: 400px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="title-container">
+            <h1>로그인</h1>
+        </div>
+
+        <form>
+            <div class="form-group">            
+                <div>이름</div>
+                <input type="text" id="username" name="username" placeholder="아이디">
+                <p class="input-error" id="usernameError">필수 입력 항목입니다!</p>
+                <p class="input-correct" id="usernameCorrect"></p>
+            </div>
+            <div class="form-group">
+                <div>닉네임</div>
+                <input type="nickname" id="nickname" placeholder="닉네임">
+                <p class="input-error" id="nicknameError">닉네임을 2~5글자로 구성해주세요!</p>
+                <p class="input-correct" id="nicknameCorrect"></p>
+            </div>
+            <div class="form-group">
+                <div>이메일</div>
+                <input type="email" id="email" placeholder="이메일">
+                <p class="input-error" id="emailError">올바른 이메일 형식이 아닙니다!</p>
+                <p class="input-correct" id="emailCorrect"></p>
+            </div>
+            <div class="form-group">
+                <div>비밀번호</div>
+                <input type="password" id="password" placeholder="비밀번호">
+                <p class="input-error" id="passwordError">영어+숫자+특수문자를 혼합하여 작성해주세요</p>
+                <p class="input-correct" id="passwordCorrect"></p>
+            </div>
+            <div class="form-group">
+                <div>비밀번호확인</div>
+                <input type="password" id="passwordCheck" placeholder="비밀번호 확인">
+                <p class="input-error" id="passwordCheckError">비밀번호가 일치하지 않습니다!</p>
+                <p class="input-correct" id="passwordCheckCorrect"></p>
+            </div>
+
+            <div class="bottom-container">
+                <button id="registerButton" type="submit" class="btn-primary">회원가입</button>
+            </div>
+        </form>
+
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <h1>가입성공!</h1>
+                <p>umc 회원의 가입을 축하합니다</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // HTML 요소 가져오기
+        const username = document.getElementById('username');
+        const usernameError = document.getElementById('usernameError');
+        const usernameCorrect = document.getElementById('usernameCorrect');
+        const nickname = document.getElementById('nickname');
+        const nicknameError = document.getElementById('nicknameError');
+        const nicknameCorrect = document.getElementById('nicknameCorrect');
+        const eamil = document.getElementById('email');
+        const eamilError = document.getElementById('emailError');
+        const emailCorrect = document.getElementById('emailCorrect');
+        const password = document.getElementById('password');
+        const passwordError = document.getElementById('passwordError');
+        const passwordCorrect = document.getElementById('passwordCorrect');
+        const passwordCheck = document.getElementById('passwordCheck');
+        const passwordCheckError = document.getElementById('passwordCheckError');
+        const passwordCheckCorrect = document.getElementById('passwordCheckCorrect');
+        const registerButton = document.getElementById('registerButton');
+        const modal = document.getElementById('myModal');
+        
+
+        let usernameComplete = false;
+        let nicknameComplete = false;
+        let emailComplete = false;
+        let passwordComplete = false;
+        let passwordCheckComplete = false;
+        let passwordData = "";
+
+
+        username.addEventListener('change', (e) => {
+            if (username.value.trim() !== "") {
+                usernameError.textContent = "";
+                usernameCorrect.textContent = "멋진 이름이네요!"
+                usernameComplete = true;
+
+                if(usernameComplete && nicknameComplete && emailComplete && passwordComplete && passwordCheckComplete)  {
+                    registerButton.style.backgroundColor = "black";
+                    registerButton.style.pointerEvents = "auto"
+                }
+            } else { 
+                usernameError.textContent = "필수 입력 항목입니다!";
+                usernameComplete = false;
+                usernameCorrect.textContent = ""
+            }
+        });
+
+        nickname.addEventListener('change', (e) => {
+            if (nickname.value.trim() !== "" && e.target.value.length <= 5 && e.target.value.length >= 2) {
+                nicknameError.textContent = "";
+                nicknameCorrect.textContent = "멋진 닉네임이네요!"
+                nicknameComplete = true;
+
+                if(usernameComplete && nicknameComplete && emailComplete && passwordComplete && passwordCheckComplete)  {
+                    registerButton.style.backgroundColor = "black";
+                    registerButton.style.pointerEvents = "auto"
+                }
+            } else { 
+                nicknameError.textContent = "닉네임을 2~5글자로 구성해주세요!";
+                nicknameCorrect.textContent = ""
+                nicknameComplete = false;
+            }
+        });
+
+
+        eamil.addEventListener('change', (e) => {
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (eamil.value.trim() !== "" && emailRegex.test(e.target.value)) {
+                eamilError.textContent = "";
+                emailCorrect.textContent = "올바른 이메일 형식입니다!"
+                emailComplete = true;
+
+                if(usernameComplete && nicknameComplete && emailComplete && passwordComplete && passwordCheckComplete)  {
+                    registerButton.style.backgroundColor = "black";
+                    registerButton.style.pointerEvents = "auto"
+                }
+            } else { 
+                eamilError.textContent = "올바른 이메일 형식이 아닙니다.";
+                emailCorrect.textContent = ""
+                emailComplete = false;
+            }
+        });
+
+        password.addEventListener('change', (e) => {
+            passwordData = e.target.value
+            const passwordRegex = /(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!])(?=.*[a-zA-Z\d@#$%^&+=!]).{8,}$/;
+            if (password.value.trim() !== "" && passwordRegex.test(e.target.value)) {
+                passwordError.textContent = "";
+                passwordCorrect.textContent = "올바른 비밀번호 형식입니다!"
+                passwordComplete = true;
+
+                if(usernameComplete && nicknameComplete && emailComplete && passwordComplete && passwordCheckComplete)  {
+                    registerButton.style.backgroundColor = "black";
+                    registerButton.style.pointerEvents = "auto"
+                }
+            } else { 
+                passwordError.textContent = "영어+숫자+특수문자를 혼합하여 작성해주세요";
+                passwordCorrect.textContent = ""
+                passwordComplete = false;
+
+                
+            }
+        });
+
+        passwordCheck.addEventListener('change', (e) => {
+            if (passwordCheck.value.trim() !== "" && e.target.value === passwordData) {
+                passwordCheckError.textContent = "";
+                passwordCheckCorrect.textContent = "비밀번호가 일치합니다!"
+                passwordCheckComplete = true;
+
+                if(usernameComplete && nicknameComplete && emailComplete && passwordComplete && passwordCheckComplete)  {
+                    registerButton.style.backgroundColor = "black";
+                    registerButton.style.pointerEvents = "auto"
+                }
+            } else { 
+                passwordCheckError.textContent = "비밀번호가 일치하지 않습니다!";
+                passwordCheckCorrect.textContent = "";
+                passwordCheckComplete = false;
+            }
+        });
+        
+        registerButton.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            if(usernameComplete && nicknameComplete && emailComplete && passwordComplete && passwordCheckComplete)  {
+                modal.style.display = 'flex'; 
+            }
+      
+        })
+
+    </script>
+
+</body>
+</html> 
