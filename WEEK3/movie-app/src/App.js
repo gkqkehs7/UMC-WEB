@@ -1,36 +1,25 @@
-import { movies } from './movie';
+import { movies } from './movieApi';
 import './App.css';
+import styled from "styled-components";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Main from './pages/main';
+import Movie from './pages/movie';
+import Program from './pages/program';
+import People from './pages/people';
+import Header from './components/header';
 
 function App() {
   return (
-    <div className="App">
-      <div className="movie-conatiner">
-        {
-          movies.results.map((movie) => {
-            return (
-                <div className="movie-box">
-                  {/* 화면 hover시에 영화 설명 부분 */}
-                  <div className="movie-overview">
-                    <p>{movie.title}</p>
-                    <p>{movie.overview}</p>
-                  </div>
-
-                  {/* 이미지 부분 */}
-                  <div className="movie-image-container">
-                    <img className="movie-image" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
-                  </div>
-
-                  {/* 제목, 평점 부분 */}
-                  <div className="movie-text">
-                    <p>{movie.title}</p>
-                    <p>{movie.vote_average}</p>
-                  </div>
-                </div>
-            )
-          })
-        }
-      </div>
-    </div>
+    <BrowserRouter>
+      <Header/>
+      <Routes>
+        <Route exact path="/" element={<Main />} />
+        <Route exact path="/movie" element={<Movie />} />
+        <Route exact path='/program' element={<Program />} />
+        <Route exact path='/people' element={<People />} />
+      </Routes>
+    </BrowserRouter>
+ 
   );
 }
 
