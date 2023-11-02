@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { movies } from '../movieApi';
+import { useNavigate } from 'react-router-dom';
 
 const App = styled.div`
   background-color: 'white';
@@ -15,6 +16,7 @@ const MovieContainer = styled.div`
 const MovieBox = styled.div`
   background-color: #3A487F;
   position: relative;
+  cursor: pointer;
 
   &:hover .movie-image-container {
     filter: brightness(0.3);
@@ -62,11 +64,18 @@ const MovieOverviewText = styled.p`
 `
 
 function Movie() {
+
+  const navigate = useNavigate();
+
+  const toMoviePage = () => {
+    navigate('/movieDetail')
+  }
+
   return (
     <App>
       <MovieContainer>
         {movies.results.map((movie) => (
-          <MovieBox key={movie.id}>
+          <MovieBox key={movie.id} onClick={toMoviePage}>
             <MovieOverview>
               <MovieOverviewText>{movie.overview}</MovieOverviewText>
             </MovieOverview>
