@@ -29,16 +29,10 @@ function App() {
 
   const fetchData = async () => {
     try {
-    
-      // 이렇게 바꿔오셈, 엔터치면 나오게 바꿔오고
-      await axios.get(
-        'https://api.openweathermap.org/data/2.5/weather', {
-          q: city,
-          appid: 'dfb8b97dd4041423ab86e20457c50a5f',
-        }
-      )
+      const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
-      const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=dfb8b97dd4041423ab86e20457c50a5f`);
+      console.log(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`)
+      const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`);
       setWeatherData(response.data);
     } catch (error) {
       // 여기서 처리
